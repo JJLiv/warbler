@@ -1,0 +1,45 @@
+{% extends 'users/detail.html' %}
+{% block user_details %}
+  <div class="col-sm-9">
+    <div class="row">
+
+      {% for like in user.likes %}
+
+        <div class="col-lg-4 col-md-6 col-12">
+          <div class="card user-card">
+            <div class="card-inner">
+              <div class="image-wrapper">
+                <img src="{{ User.query.get_or_404(like.user_id).header_image_url }}" alt="" class="card-hero">
+              </div>
+              <div class="card-contents">
+                <a href="/users/{{ like.user_id }}" class="card-link">
+                  <img src="{{ User.query.get_or_404(like.user_id).image_url }}" alt="Image for {{ User.query.get_or_404(like.user_id).username }}" class="card-image">
+                  <p>@{{ User.query.get_or_404(like.user_id).username }}</p>
+                </a>
+                <ul class="user-stats nav nav-pills">
+                    <li class="stat">
+                      <p class="small">Liked Warbler</p>
+                      <h4>
+                        <a href="/users/{{ like.user_id }}">{{ Message.query.get_or_404(like.message_id).text }}</a>
+                        <p>Message.query.get_or_404(like.message_id).timestamp</p>
+                        <form method="POST"
+                        action="/users/remove_like/{{ like.message_id }}">
+                    <button class="btn btn-primary btn-sm">Unlike</button>
+                  </form>
+                      </h4>
+                    </li>
+                </ul>
+
+               
+
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+      {% endfor %}
+
+    </div>
+  </div>
+{% endblock %}
